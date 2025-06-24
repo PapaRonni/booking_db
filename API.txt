@@ -1,0 +1,730 @@
+Последнее обновление 11.04.2025
+
+В данном документе содержится описание клиентского API. 
+
+Все вызовы осуществляются по протоколу HTTPS на URL:
+https://litepms.ru/api/method_name
+
+где method_name — название метода API.
+
+Результат выдаётся в формате json.
+
+Авторизация
+
+Авторизация осуществляется по логину пользователя и API ключу, который вы можете сгенерировать в разделе Настройки — Пароль. 
+Используются следующие параметры:
+login — логин пользователя в системе.
+hash — API ключ.
+Параметры передаются с помощью GET или POST запросов на URL метода.
+
+Если вы будете использовать логин и API ключ главного пользователя, будет предоставлен доступ ко всем методам API, для ограничения доступа рекомендуем создать отдельного сотрудника в разделе "Настройки - Сотрудники". На странице редактирования сотрудника в блоке "Права доступа" отметьте галочками необходимые уровни доступа, затем откройте закладку "API", нажмите кнопку "Создать ключ". Для авторизации используйте логин и API ключ сотрудника.
+
+Пример: https://litepms.ru/api/getBookingFields?login=user&hash=ee11cbb19052e40b07aac0ca060c23ee
+
+Доступные методы
+
+
+getHotelInfo
+
+Получение информации об объекте.
+
+https://litepms.ru/api/getHotelInfo
+
+Ответ
+
+{
+  "status": "success",
+  "data": {
+      "title": "Название",
+      "address": "Адрес",
+      "email": "электронная почта",
+      "phone": "Телефон",
+ }
+
+getTermsCat
+
+Получение категорий справочников.
+
+https://litepms.ru/api/getTermsCat
+
+Ответ
+
+{
+  "status": "success",
+  "data": [
+    {
+      "id": "1",
+      "title": "Способы оплаты"
+    },
+    {
+      "id": "2",
+      "title": "Этаж"
+    },
+}
+getTerms
+
+Получение значения справочников. При передаче параметра cat_id будут возвращены значения конкретного справочника.
+Параметры передаются методом GET.
+
+https://litepms.ru/api/getTerms
+
+Запрос
+
+Параметр	Тип	Формат	Обязательный	Описание
+cat_id	Int		Нет	ID категории справочника
+
+
+getBookingFields 
+
+Получение информации обо всех полях используемых в бронировании.
+
+https://litepms.ru/api/getBookingFields 
+
+Ответ
+
+{
+  "status": "success",
+  "data": {
+    "id": {
+      "title": "Reservation ID",
+      "type": "int"
+    },
+    "booking_id": {
+      "title": "Reservation Number",
+      "type": "int"
+    },
+    "author_id": {
+      "title": "Profile ID",
+      "type": "int"
+    },
+    "author_name": {
+      "title": "Profile Name",
+      "type": "list",
+      "items": [
+        ...
+      ]
+    },
+    "date": {
+      "title": "Reservation Date",
+      "type": "datetime"
+    },
+    "last_update": {
+      "title": "Last change",
+      "type": "datetime"
+    },
+    "client_name": {
+      "title": "Client name",
+      "type": "string"
+    },
+    "client_middlename": {
+      "title": "Client Middlename",
+      "type": "string"
+    },
+    "client_surname": {
+      "title": "Client Surname",
+      "type": "string"
+    },
+    "client_phone": {
+      "title": "Client phone",
+      "type": "string"
+    },
+    "client_email": {
+      "title": "Client email",
+      "type": "string"
+    },
+    "client_address": {
+      "title": "Client address",
+      "type": "string"
+    },
+    "client_id": {
+      "title": "Client ID",
+      "type": "int"
+    },
+    "client_booking_comment": {
+      "title": "Client comment",
+      "type": "string"
+    },
+    "comment": {
+      "title": "Administrator comment",
+      "type": "string"
+    },
+    "date_in": {
+      "title": "Date in",
+      "type": "datetime"
+    },
+    "date_out": {
+      "title": "Date out",
+      "type": "datetime"
+    },
+    "early_time_in": {
+      "title": "Early time in",
+      "type": "bool"
+    },
+    "late_time_out": {
+      "title": "Late time out",
+      "type": "bool"
+    },
+    "person": {
+      "title": "Person count",
+      "type": "int"
+    },
+    "person_add": {
+      "title": "Additional person count",
+      "type": "int"
+    },
+    "price": {
+      "title": "Price",
+      "type": "float"
+    },
+    "payed": {
+      "title": "Payed",
+      "type": "float"
+    },
+    "room_id": {
+      "title": "Room ID",
+      "type": "int"
+    },
+    "room_name": {
+      "title": "Room name",
+      "type": "list",
+      "items": [
+        ...
+      ]
+    },
+    "status_id": {
+      "title": "Reservation status ID",
+      "type": "int"
+    },
+    "status_name": {
+      "title": "Reservation status name",
+      "type": "list",
+      "items": [
+        "not_confirmed",
+        "confirmed",
+        "canceled",
+        "departure",
+        "not_going",
+        "accommodation",
+        "reserved",
+        "overbook"
+      ]
+    },
+    "service_id": {
+      "title": "Sales channel ID",
+      "type": "int"
+    },
+    "service_name": {
+      "title": "Sales channel name",
+      "type": "list",
+      "items": {
+        ...
+      }
+    },
+    "service_number": {
+      "title": "Sales channel number",
+      "type": "string"
+    }
+  }
+}
+
+getBookings
+
+Получение информации о всех бронированиях, в которых происходили изменения в заданный промежуток времени. Возвращается список ID бронирований.
+
+https://litepms.ru/api/getBookings
+
+Запрос
+
+Параметр	Тип	Формат	Обязательный	Описание
+start	Date	ГГГГ-ММ-ДД	Да	Начальная дата
+finish	Date	ГГГГ-ММ-ДД	Да	Конечная дата
+
+Ответ
+
+{ 
+    success: true,
+    data: [
+    { … }
+    ]
+}
+
+
+getBooking
+
+Получение информации о конкретном бронировании. Назначение полей описано в методе getBookingFields.
+
+https://litepms.ru/api/getBooking
+
+Запрос
+
+Параметр	Тип	Формат	Обязательный	Описание
+id	Int		Да	ID бронирования. Обратите внимание, это не номер бронирования, который виден при открытии брони
+
+Ответ
+
+{ 
+    success: true,
+    data: { 
+        	...
+    }
+    
+}
+
+getClients
+
+Получение списка клиентов. Возможно использование фильтра. Параметры передаются методом GET.
+
+https://litepms.ru/api/getClients
+
+Запрос
+
+Параметр	Тип	Формат	Описание
+foreigner	Int	0 | 1	Является ли клиент иностранцем.
+gender	Int	1 | 2	Поиск по полу клиента. 1 — мужской, 2 — женский.
+blacklist	Int	0 | 1	Находится в черном списке.
+vip	Int	0 | 1	Находится в списке VIP.
+adv	Int	0 | 1	Дал согласие на получение новостных рассылок.
+search	String		Произвольная строка поиска по полям ФИО, телефон, электронная почта, комментарий.
+start	Date	ДД-ММ	Начальная дата поиска дня рождения, указывается число и месяц.
+finish	Date	ДД-ММ	Конечная дата поиска дня рождения, указывается число и месяц.
+
+Ответ
+
+{ 
+    success: true,
+    page: 1,
+    pages: 1,
+    count: 10,
+    data: { 
+        	...
+    }
+    
+}
+
+getClient
+
+Получение информации о конкретном клиенте. Параметры передаются методом GET.
+
+https://litepms.ru/api/getClient
+
+Запрос
+
+Параметр	Тип	Формат	Обязательный	Описание
+id	Int		Да	ID клиента
+
+Ответ
+
+{ 
+    success: true,
+    data: { 
+        	...
+    }
+    
+}
+
+getRooms 
+
+Получение списка номеров. Если передается параметр room_id, будет возвращена информации о конкретном номере. Параметры передаются методом GET.
+
+https://litepms.ru/api/getRooms
+
+Запрос
+
+Параметр	Тип	Формат	Обязательный	Описание
+room_id	Int		Нет	ID номера
+
+Ответ
+
+{ 
+    success: true,
+    data: [
+        { ... }
+    ]
+}
+
+
+getCategories 
+
+Получение списка категорий. Если передается параметр cat_id, будет возвращена информации о конкретной категории. Параметры передаются методом GET.
+
+https://litepms.ru/api/getCategories
+
+Запрос
+
+Параметр	Тип	Формат	Обязательный	Описание
+cat_id	Int		Нет	ID категории
+
+Ответ
+{ 
+    success: true,
+    data: [
+        { ... }
+    ]
+}
+
+
+getRoomRates 
+
+Получение списка тарифов для номера. 
+
+https://litepms.ru/api/getRoomRates
+
+Запрос
+
+Параметр	Тип	Формат	Обязательный	Описание
+room_id	Int		Да	ID номера
+
+Ответ
+
+{ 
+    success: true,
+    data: [
+        { ... }
+    ]
+}
+
+
+getCatRates 
+
+Получение списка тарифов для категории.
+
+https://litepms.ru/api/getCatRates
+
+Запрос
+
+Параметр	Тип	Формат	Обязательный	Описание
+cat_id	Int		Да	ID категории
+
+Ответ
+
+{ 
+    success: true,
+    data: [
+        { ... }
+    ]
+}
+
+getRates 
+
+Получение полного списка тарифов созданный в вашем аккаунте.
+
+https://litepms.ru/api/getRates
+
+Ответ
+
+{ 
+    success: true,
+    data: [
+        { ... }
+    ]
+}
+
+getOccupancy 
+
+Получение информации о свободных и занятых номерах, загрузке объекта за выбранный период по дням. Параметры передаются методом POST.
+
+https://litepms.ru/api/getOccupancy
+
+Запрос
+
+Параметр	Тип	Формат	Обязательный	Описание
+from_date	Date	YYYY-MM-DD	Нет	Начальная дата периода, если не указана назначается текущая дата
+to_date	Date	YYYY-MM-DD	Нет	Конечная дата периода, если не указана назначается текущая дата
+
+Ответ
+
+{ 
+    success: true,
+    data: [
+        { 
+	"2021-04-01": {
+	    total_rooms: 0, // всего номеров 
+                 free_rooms: 0, // свободно номеров
+ 	    busy_rooms: 0, // занято номероа
+	    loading_rooms: 0, // процент загрузки номеров
+	    total_bed: 0, // всего спальных мест
+	    free_beds: 0, // свободно спальныех мест
+	    busy_beds: 0, // занято спальных мест
+	    loading_beds: 0, // процент загрузки спальных мест
+	    person: 0, // занято основных мест
+	    add_person: 0, // занято дополнительных мест
+	    total_person: 0, // всего занято мест
+	}
+        },
+        ...
+    ]
+}
+
+getCashboxTransaction 
+
+Получение информации о всех операциях в кассе за выбранный период по дням. Параметры передаются методом POST.
+
+https://litepms.ru/api/getCashboxTransaction
+
+Запрос
+
+Параметр	Тип	Формат	Обязательный	Описание
+from_date	Date	YYYY-MM-DD	Нет	Начальная дата периода, если не указана назначается текущая дата
+to_date	Date	YYYY-MM-DD	Нет	Конечная дата периода, если не указана назначается текущая дата
+type	Int		Нет	0 - доходная операция (> 0), 1 - расходная операция (< 0)
+pay_type_id	Int		Нет	ID способа оплаты, смотрите в разделе Настройки - Справочники - Способы оплаты
+receiver_id	Int		Нет	ID способа оплаты, смотрите в разделе Настройки - Справочники - Получатель платежа
+expense_id	Int		Нет	ID статьи расхода, смотрите в разделе Настройки - Справочники - Статьи расходов
+income_id	Int		Нет	ID статьи доходов, смотрите в разделе Настройки - Справочники - Статьи доходов
+page	Int		Нет	Номер страницы выдачи результата
+limit	Int		Нет	Количество элементов в выдаче, по умолчанию 100, максимум 100.
+
+Ответ
+
+{ 
+    success: true,
+    data: [	
+    {
+"date": "2023-02-02 14:02",
+"pay_type": {
+"id": 0,
+	"title": ""
+},
+"expense": {
+	"id": 6266,
+	"title": "Возврат"
+},
+"income": {
+	"id": 0,
+	"title": ""
+},
+"price": -1000.00,
+"client": {
+	"id": 861,
+	"name": "Тест",
+	"extradata": ""
+},
+"organization": {
+	"id": 11,
+	"title": "ООО &quot;Василек&quot;",
+	"inn": "987654321"
+}
+    }
+    ]
+}
+
+getFreeRooms 
+
+Получение списка свободных номеров на указанные даты заезда и выезда. Параметры передаются методом POST.
+
+https://litepms.ru/api/getFreeRooms
+
+Запрос
+
+Параметр	Тип	Формат	Обязательный	Описание
+date_in	Date	YYYY-MM-DD	Да	Начальная дата периода, если не указана назначается текущая дата
+date_out	Date	YYYY-MM-DD	Да	Конечная дата периода, если не указана назначается текущая дата
+cat_id	Int		Нет	ID категории
+room_id	Int		Нет	ID номеров
+person	Int		Нет	Количество человек для заезда
+
+Ответ
+
+{ 
+    success: true,
+    data: [
+        { 
+	id: 2,
+	user_id: 0,
+	cat_id: 0,
+	floor_id: 0,
+	corpus_id: 0,
+	name: название номера,
+	widget_name:,
+	descr: описание номера,
+	area: 15.5
+	person: 2,
+	person_add: 2,
+	children: 2,
+	children_in_person: 1,
+	accom_opt: a:0:{},
+	services: a:3:{i:0;s:2:"11";i:1;s:2:"12";i:2;s:2:"47";},
+	comfort: a:0:{},
+	rate_id: 2792,
+	price: 0.00,
+	price_for_bed: 0.00,
+	person_add_price: 300.00,
+	children_price: 0.00,
+	price_per_person: 0,
+	booking_mode: 1,
+	clean_status: 2,
+	sort: 1,
+	sort_bm: 0,
+	active: 1,
+	active_bm: 1,
+	active_cm: 1,
+	pay_method: a:0:{},
+	color: ,
+	free_room: 1,
+	min_stay_price: 4000,
+	rate: [
+	       {
+		2792: {
+			min_person: 1,
+			max_person: 2,
+			real_min_person: 1,
+			info: {
+				title: Основной,
+				descr: ,
+				accom_opt: a:0:{},
+				price_per_person: 0,
+				show_accom_opt: 1
+			},
+			price_per_person: 0
+			show_accom_opt: 1
+			accom_opt_arr: [],
+			stay_price: 4000,
+			old_stay_price: 0,
+			person_add_price: 500,
+		}
+
+	    }
+        },
+    ]
+}
+
+getFreeRoomsByDates 
+
+Получение календаря доступности по всем номерам на каждый день из указанного периода. Параметры передаются методом POST.
+
+https://litepms.ru/api/getFreeRooms
+
+Запрос
+
+Параметр	Тип	Формат	Обязательный	Описание
+from_date	Date	YYYY-MM-DD	Да	Начальная дата периода, если не указана назначается текущая дата
+to_date	Date	YYYY-MM-DD	Да	Конечная дата периода, если не указана назначается текущая дата
+cat_id	Int		Нет	ID категории
+room_id	Int		Нет	ID номеров
+
+Ответ
+
+{
+    "success": true,
+    "data": {
+        "2": [
+	{
+	    "date": "2021-04-14",
+	    "free_room" :"1"
+  	}
+          ],
+       "3": [
+            {
+	    "date": "2021-04-14",
+	    "free_room":"0"
+	}
+          ],
+       "109": [
+	{
+	    "date": "2021-04-14",
+	    "free_room":"1"
+	}
+          ],
+        "163": [
+	{
+	    "date": "2021-04-14",
+	    "free_room": "0"
+	}
+          ],
+        "3517":[
+	{
+	    "date": "2021-04-14",
+	    "free_room":"0"
+	}
+          ],
+        "33687": [
+	{
+	    "date": "2021-04-14",
+	    "free_room": "1"
+	}
+          ]
+    }
+}
+
+
+searchBooking 
+
+Поиск броней по указанным параметрам. Параметры передаются методом POST.
+
+https://litepms.ru/api/searchBooking
+
+Запрос
+
+Параметр	Тип	Формат	Обязательный	Описание
+from_date	Date	YYYY-MM-DD	Да	Начальная дата периода, если не указана назначается текущая дата
+to_date	Date	YYYY-MM-DD	Да	Конечная дата периода, если не указана назначается текущая дата
+type	String		Нет	Тип поиска броней, возможные варианты:
+booking - искать брони, созданные в указанный период
+checkin - искать заезда в указанный период
+checkout - искать выезды в указанный период
+stay - искать проживания в указанный период
+
+по умолчанию: booking
+room_id	Array		Нет	массив с ID номеров проживания, см. раздел "Номера".
+status_id 	Array		Нет	массив с ID статусами брони
+1 - не подтверждено,
+2 - подтверждено,
+3 - отменено,
+4 - выезд,
+5 - незаезд,
+6 - проживание,
+8 - резерв,
+9 - overbook
+channel_id	Array		Нет	Массив с ID источников бронирования, см. раздел "Настройки - Источники бронирования"
+label_id	Array		Нет	Массив с ID меток брони
+client_id	Int		Нет	ID клиента
+client_email	String		Нет	электронная почта клиента, либо её часть
+client_phone	String		Нет	телефон клиента, либо его часть
+page	Int		Нет	Номер страницы, по умолчанию 1.
+
+Ответ
+
+Если количество записей в ответе более 50, ответ разбивается на страницы по 50 записей.
+
+{
+    "success": true,
+    "page": 1, // номер страницы
+    "pages": 1, // количество страниц
+    "count": 3, // всего записей
+    "data": [{
+	     }]
+}
+
+getDoc 
+
+Получение заполненной печатной формы в формате PDF или HTML.
+Параметры передаются методом GET.
+
+https://litepms.ru/api/getDoc
+
+Запрос
+
+Параметр	Тип	Формат	Обязательный	Описание
+booking_id	Int		Да	ID брони
+doc_id	Int		Да	ID шаблона печатной формы
+format	String	"pdf"
+"html"	Нет	Формат получения данных.
+По умолчанию: pdf
+
+getDocTemplate
+
+Получение списка шаблонов печатных форм
+
+https://litepms.ru/api/getDocTemplate
+
+Ответ
+
+{
+  "status": "success",
+  "data": [
+    {
+      "id":  123,
+      "title": "Название шаблона"
+    }
+}
+
