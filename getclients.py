@@ -88,7 +88,7 @@ except OperationalError as e:
 if clients and conn and cur:
     for client in clients:
         try:
-            print("Вставляем клиента:", client)
+            # print("Вставляем клиента:", client)
             cur.execute("""
                 INSERT INTO clients (
                     id, user_id, group_id, date, name, middlename, surname, extradata, birthday, birthday_place,

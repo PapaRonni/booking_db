@@ -65,34 +65,7 @@ except OperationalError as e:
     conn = None
     cur = None
 
-# Создание таблицы, если не существует
-if conn and cur:
-    try:
-        cur.execute('''
-            CREATE TABLE IF NOT EXISTS room_rates (
-                room_id      INT     NOT NULL,
-                rate_id      INT     NOT NULL,
-                title        TEXT,
-                mon          NUMERIC,
-                tue          NUMERIC,
-                wed          NUMERIC,
-                thu          NUMERIC,
-                fri          NUMERIC,
-                sat          NUMERIC,
-                sun          NUMERIC,
-                add_mon      NUMERIC,
-                add_tue      NUMERIC,
-                add_wed      NUMERIC,
-                add_thu      NUMERIC,
-                add_fri      NUMERIC,
-                add_sat      NUMERIC,
-                add_sun      NUMERIC,
-                PRIMARY KEY (room_id, rate_id)
-            )
-        ''')
-        conn.commit()
-    except Exception as e:
-        print(f"Ошибка при создании таблицы: {e}")
+# Править в соответствии с новым create_roomrate.sql
 
 # Вставка/обновление тарифов
 if conn and cur:

@@ -694,37 +694,3 @@ page	Int		Нет	Номер страницы, по умолчанию 1.
     "data": [{
 	     }]
 }
-
-getDoc 
-
-Получение заполненной печатной формы в формате PDF или HTML.
-Параметры передаются методом GET.
-
-https://litepms.ru/api/getDoc
-
-Запрос
-
-Параметр	Тип	Формат	Обязательный	Описание
-booking_id	Int		Да	ID брони
-doc_id	Int		Да	ID шаблона печатной формы
-format	String	"pdf"
-"html"	Нет	Формат получения данных.
-По умолчанию: pdf
-
-getDocTemplate
-
-Получение списка шаблонов печатных форм
-
-https://litepms.ru/api/getDocTemplate
-
-Ответ
-
-{
-  "status": "success",
-  "data": [
-    {
-      "id":  123,
-      "title": "Название шаблона"
-    }
-}
-

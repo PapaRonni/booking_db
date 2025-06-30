@@ -11,7 +11,7 @@ url = "https://litepms.ru/api/getBookings"
 params = {
     "login": LOGIN,
     "hash": API_KEY,
-    "start": "2025-06-20",   # укажи нужный диапазон дат (last_update)
+    "start": "2025-06-10",   # укажи нужный диапазон дат (last_update)
     "finish": datetime.now().strftime("%Y-%m-%d")
 }
 
@@ -52,10 +52,10 @@ while True:
         print("Ошибка в ответе API:", data)
         break
     page_ids = data.get("data", [])
+    # print(f"DEBUG: page_ids = {page_ids}")
     if not page_ids:
         break
     bookings_ids.extend(page_ids)
-    print(f"Загружено id броней: {len(bookings_ids)} (страница {page})")
     if page >= data.get("pages", 1):
         break
     page += 1
@@ -97,19 +97,6 @@ except OperationalError as e:
     print(f"Ошибка подключения к базе данных: {e}")
     conn = None
     cur = None
-
-# Удаляем устаревшие брони, которых больше нет в API
-# if conn and cur and id_list:
-#     try:
-#         cur.execute(
-#             "DELETE FROM bookings WHERE id NOT IN %s",
-#             (tuple(id_list),)
-#         )
-#         print(f"Удалено устаревших броней: {cur.rowcount}")
-#         conn.commit()
-#     except Exception as e:
-#         print(f"Ошибка при удалении устаревших броней: {e}")
-#         conn.rollback()
 
 if all_bookings and conn and cur:
     for b in all_bookings:
