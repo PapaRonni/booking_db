@@ -11,7 +11,7 @@ url = "https://litepms.ru/api/getBookings"
 params = {
     "login": LOGIN,
     "hash": API_KEY,
-    "start": "2025-06-10",   # укажи нужный диапазон дат (last_update)
+    "start": "2025-06-20",   # укажи нужный диапазон дат (last_update)
     "finish": datetime.now().strftime("%Y-%m-%d")
 }
 
