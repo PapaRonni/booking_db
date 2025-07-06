@@ -48,7 +48,7 @@
 
 2. **Установите зависимости:**
    ```bash
-   pip install psycopg2-binary requests python-dotenv
+   pip install -r requirements.txt
    ```
 
 3. **Создайте файл `.env` с настройками:**
