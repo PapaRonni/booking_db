@@ -181,7 +181,7 @@ def sync_bookings(cur, conn):
     params = {
         "login": LOGIN,
         "hash": API_KEY,
-        "start": "2025-06-20",   # укажи нужный диапазон дат (last_update)
+        "start": "2025-07-01",   # укажи нужный диапазон дат (last_update)
         "finish": datetime.now().strftime("%Y-%m-%d")
     }
     bookings_ids = []
