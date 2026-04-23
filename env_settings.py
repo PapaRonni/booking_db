@@ -13,3 +13,4 @@ db_password = os.environ['password']
 #api_access
 login = os.environ['login']
 api_key = os.environ['api_key']
+password = os.environ['pass']

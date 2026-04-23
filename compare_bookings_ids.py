@@ -43,7 +43,7 @@ print(f"Получено id из getBookings: {len(all_ids)}")
 api_booking_ids = set()
 for booking_id in all_ids:
     detail_params = {
-        "login": LOGIN,
+        "login": LOGIN,   
         "hash": API_KEY,
         "id": booking_id
     }

@@ -9,7 +9,7 @@ import json
 from module import write_sync_log
 
 # --------------- Logger settings
-log_setup = json.load(open('log_settings.json', 'r', encoding='utf-8'))
+log_setup = json.load(open('/root/booking_db/log_settings.json', 'r', encoding='utf-8'))
 
 logging.config.dictConfig(log_setup)
 logger = logging.getLogger("sync_bookings")
@@ -181,7 +181,7 @@ def sync_bookings(cur, conn):
     params = {
         "login": LOGIN,
         "hash": API_KEY,
-        "start": "2025-07-01",   # укажи нужный диапазон дат (last_update)
+        "start": "2025-07-25",   # укажи нужный диапазон дат (last_update)
         "finish": datetime.now().strftime("%Y-%m-%d")
     }
     bookings_ids = []

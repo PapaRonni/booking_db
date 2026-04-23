@@ -1,0 +1,34 @@
+# Окружение и переменные с секретами
+.env
+.env.*
+!.env.example
+
+# Ключи, сертификаты, хранилища
+*.pem
+*.key
+*.p12
+*.pfx
+*.jks
+*.keystore
+id_rsa
+id_ed25519
+*.ppk
+
+# Учётные файлы облаков и API
+credentials.json
+*credentials*.json
+service-account*.json
+google-credentials.json
+.secrets
+
+# Скрипт с захардкоженными паролями/API — держите копию локально или используйте .env
+run_sync.sh
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Логи (могут содержать чувствительные данные)
+logs/
+sync.log
